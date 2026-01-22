@@ -1,0 +1,55 @@
+# --- LM4C specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+evaluation_epsilon: 0.0
+
+runner: "lm4c_parallel"
+batch_size_run: 8
+buffer_size: 5000 
+batch_size: 32
+
+run: "lm4c_run"
+lr: 0.0003  # 0.0003 for {MPE, Hallway} and 0.0003 (0.0005) for SMACv2
+
+# update the target network every {} episodes
+target_update_interval: 200
+
+mac: "lm4c_mac"
+
+# params for agent
+agent: "lm4c"
+agent_output_type: q
+rnn_hidden_dim: 128
+att_heads: 4
+comm_rounds: 3
+
+# use the Q_Learner to train
+learner: "lm4c_learner"
+mixing_embed_dim: 32
+hypernet_embed: 64
+td_lambda: 0.6 # 0.3 for 6h_vs_8z
+q_lambda: False
+mask_state: False
+
+# consensus params
+consensus_hidden_dim: 128
+consensus_dim: 64
+consensus_lr: 0.0005
+temp: 0.07
+max_sample_size: 2048
+
+# use state predictor to predict the state
+action_embed_dim: 32
+predictor_lr: 0.0002
+
+# Priority experience replay
+use_per: False
+per_alpha: 0.6
+per_beta: 0.4
+return_priority: False
+
+name: "lm4c"

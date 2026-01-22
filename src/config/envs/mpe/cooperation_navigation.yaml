@@ -1,0 +1,39 @@
+env: "mpe"
+
+env_args:
+  key: "simple_spread_0vis"
+  map_name: "cooperation_nevigation"
+  num_agents: 10
+  num_landmarks: 10
+  agent_size: 0.15
+  time_limit: 60
+  individual_reward: False
+  reward_discrete: False
+  reward_rendundant: False # original reward function
+  visibility_range: 2
+
+common_reward: True
+
+#logs 
+use_tensorboard: True
+test_greedy: True
+test_nepisode: 32
+test_interval: 25000
+log_interval: 25000
+runner_log_interval: 25000
+learner_log_interval: 25000
+
+save_model: True # Save the models to disk
+save_model_type: "latest"
+save_model_interval: 25000 # Save models after this many timesteps
+
+t_max: 10050000
+
+checkpoint_path: "" # Load a checkpoint from this path, such as results/models/pp_9a3g_rule/i2cp_spatio_seed37_pp_9a3g_rule_2025-05-21_23-31-32
+evaluate: False # Evaluate model for test_nepisode episodes and quit (no training)
+save_animation: False
+
+weight_ir: 0.2
+scale_cf: 100.0
+
+weight_cs: 5.0
