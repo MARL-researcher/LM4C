@@ -32,6 +32,6 @@ checkpoint_path: "" # Load a checkpoint from this path, such as results/models/p
 evaluate: False # Evaluate model for test_nepisode episodes and quit (no training)
 save_animation: False
 
-scale_cf: 100.0
-weight_ir: 2
+weight_ir: 1.0
 weight_cs: 0.5
+cf_action: 0

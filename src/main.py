@@ -24,9 +24,7 @@ ex = Experiment("pymarl")
 ex.logger = logger
 ex.captured_out_filter = apply_backspaces_and_linefeeds
 
-# os.environ['OMP_NUM_THREADS'] = '6'
-# os.environ['MKL_NUM_THREADS'] = '6'
-# th.set_num_threads(4)
+th.set_num_threads(1)
 
 @ex.main
 def my_main(_run, _config, _log):

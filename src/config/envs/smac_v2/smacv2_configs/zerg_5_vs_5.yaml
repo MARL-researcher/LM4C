@@ -84,6 +84,6 @@ checkpoint_path: "" # Load a checkpoint from this path, such as results/models/p
 evaluate: False # Evaluate model for test_nepisode episodes and quit (no training)
 save_replay: False # Saving the replay of the model loaded from checkpoint_path
 
-scale_cf: 2
 weight_cs: 0.0002
-weight_ir: 0.5
+weight_ir: 0.1
+cf_action: 0

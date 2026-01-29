@@ -48,6 +48,9 @@ class LM4CLearner:
         self.state_predictor_params = list(self.state_predictor.parameters())
         self.state_predictor_optimiser = Adam(params=self.state_predictor_params, lr=args.predictor_lr)
 
+        # counterfactual action
+        self.cf_action = getattr(self.args, "cf_action", 0.0)
+
         # global consensus generator
         self.global_consensus_generator = GlobalConsensusGenerator(args)
         self.target_global_consensus_generator = copy.deepcopy(self.global_consensus_generator)
@@ -172,12 +175,8 @@ class LM4CLearner:
 
         if t_env - self.log_stats_t >= self.args.learner_log_interval:
 
-            self.logger.log_stat("external_reward", (rewards * mask).sum() / (mask.sum() + 1e-8), t_env)
-            mean_cf_ins_rew = (cf_ins_rew * mask).sum() / (mask.sum() + 1e-8)
-            self.logger.log_stat("intrinsic_reward", mean_cf_ins_rew, t_env)
-            self.logger.log_stat("weighted_intrinsic_reward", mean_cf_ins_rew*self.args.weight_ir, t_env)
+            self.logger.log_stat("reward", (rewards * mask).sum() / (mask.sum() + 1e-8), t_env)
             self.logger.log_stat("loss_td", td_loss.item(), t_env)
-            self.logger.log_stat("weighted_loss_consensus", consensus_loss.item()*self.weight_cs, t_env)
             self.logger.log_stat("loss_consensus", consensus_loss.item(), t_env)
             self.logger.log_stat("total_loss", loss.item(), t_env)
             self.logger.log_stat("grad_norm", grad_norm.item(), t_env)
@@ -287,9 +286,11 @@ class LM4CLearner:
         # u_curr: [B, T, N, A] -> [B, T, 1, 1, N, A] -> [B, T, N, 2, N, A]
         u_pair = u_curr.unsqueeze(2).unsqueeze(3).expand(-1, -1, n_agents, 2, -1, -1).clone()
 
-        # apply mask to the lazy half (index 1)
+        # apply mask to the lazy half
         target_agent_ids = th.arange(n_agents, device=self.device)
-        u_pair[:, :, target_agent_ids, 1, target_agent_ids, :] = 0.0
+        cf_action = th.zeros(self.args.n_actions, device=self.device)
+        cf_action[self.cf_action] = 1.0
+        u_pair[:, :, target_agent_ids, 1, target_agent_ids, :] = cf_action
 
         s_flat = s_pair.reshape(-1, state_dim)
         h_flat = h_pair.reshape(-1, hidden_dim)
