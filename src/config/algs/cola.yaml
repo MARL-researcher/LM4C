@@ -1,0 +1,49 @@
+# --- COLA specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "cola_parallel"
+batch_size_run: 8
+buffer_size: 5000
+batch_size: 32
+
+# controller
+mac: "cola_mac"
+
+run: "cola_run"
+
+# update the target network every {} episodes
+target_update_interval: 200
+consensus_builder_embedding_dim: 4
+
+# use the Q_Learner to train
+agent_output_type: "q"
+learner: "cola_learner"
+double_q: True
+mixer: "qmix"
+mixing_embed_dim: 64
+hypernet_layers: 2
+hypernet_embed: 32
+
+consensus_builder_hidden_dim: 64
+consensus_builder_dim: 4
+
+tau: 0.996
+center_tau: 0.9
+online_temp: 0.1
+target_temp: 0.04
+input: "obs" # "obs" or "hidden"
+
+# --- Experiment running params ---
+repeat_id: 1
+label: "default_label"
+
+# --- Agent parameters ---
+agent: "cola" # Default rnn agent
+rnn_hidden_dim: 64 # Size of hidden state for default rnn agent
+
+name: "cola"

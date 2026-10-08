@@ -1,0 +1,17 @@
+torch>=2.0.0
+numpy>=1.22.0
+scipy>=1.10.0
+PyYAML>=5.3
+sacred>=0.7.0
+gym>=0.25.0
+gymnasium>=1.0.0
+pygame>=2.0.0
+matplotlib>=3.5.0
+seaborn>=0.12.0
+plotly>=5.0.0
+tensorboardX>=2.6
+six>=1.16.0
+absl-py>=2.0.0
+pyglet>=1.5.0
+SMAC>=1.0.0
+SMACv2>=1.0.0

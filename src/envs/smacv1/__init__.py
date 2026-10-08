@@ -1,0 +1,1 @@
+from .StarCraft2Env import StarCraft2EnvV1 as smacv1
